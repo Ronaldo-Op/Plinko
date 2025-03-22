@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 app.use(express.static("client"));
-let jugadores = {nombre: ""};       // { socket.id: nombre }
+let jugadores = {};       // { socket.id: nombre }
 let predicciones = {};    // { socket.id: casilla }
 let anfitrionId = null;
 let estadoJuego = [];
@@ -19,41 +19,35 @@ io.on("connection", (socket) => {
   console.log("🔌 Cliente conectado:", socket.id);
   // Recibir nombre
   socket.on("registrarJugador", (nombre) => {
-    if (!nombre || nombre.trim() === "") {
-      console.log("⛔ Nombre inválido recibido, se ignora.");
-      return; // No hacer nada si el nombre está vacío
-    }
-  
-    console.log("Jugador:", nombre);
-  
-    if (typeof jugadores[nombre] === "undefined") {
-      jugadores[nombre] = { socketId: socket.id, monedas: 50 };
-      console.log("🆕 Nuevo jugador:", nombre);
+    // Si el jugador ya existe, solo actualiza su socketId (NO reiniciar monedas)
+    if (!jugadores[nombre]) {
+      jugadores[nombre] = { socketId: socket.id, monedas: 50 }; // 👈 jugador nuevo
+      console.log(`🆕 Nuevo jugador: ${nombre}`);
     } else {
-      jugadores[nombre].socketId = socket.id; // Reasigna socketId
-      console.log("🔄 Jugador reconectado:", nombre);
+      jugadores[nombre].socketId = socket.id; // 👈 solo actualiza socketId
+      console.log(`🔄 Reconectado: ${nombre}`);
     }
   
-    // Emitir estado inicial
+    // Ahora puedes acceder correctamente a sus monedas
     socket.emit("monedasIniciales", {
       monedas: jugadores[nombre].monedas,
       bancoMonedas
     });
   
+    // Asignar rol
     if (!anfitrionId) {
       anfitrionId = socket.id;
       socket.emit("rolAsignado", "anfitrion");
-      console.log("👑 Nuevo anfitrión:", socket.id);
     } else {
       socket.emit("rolAsignado", "cliente");
       socket.emit("sincronizar", estadoJuego);
       socket.emit("objetosVisuales", objetosVisuales);
     }
   
-    console.log(`📊 ${nombre} tiene ${jugadores[nombre].monedas} monedas.`);
+    console.log(`👤 ${nombre} tiene ${jugadores[nombre].monedas} monedas.`);
     console.log("Estado actual de jugadores:", jugadores);
+
   });
-  
   
 
   socket.on("verificarSala", () => {
@@ -165,7 +159,6 @@ io.on("connection", (socket) => {
       }
     }
 }
-console.log("Estado actual de jugadores:", jugadores);
   });
 });
 
