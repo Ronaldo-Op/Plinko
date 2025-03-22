@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Juego con Anfitrión</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+  <header>
+    <div id="monedasDisplay" class="monedas-display">🪙 5</div>
+    <div id="bancoDisplay">💰 0</div>
+    <p id="prediccionTexto" class="prediccion-texto">Sin apuesta.</p>
+  </header>
+    <div class="contenedor">
+      <canvas id="gameCanvas" width="400" height="700"></canvas>
+      <div id="mensajeEmergente" class="mensaje-oculto"></div>
+      <button id="btnRandom" class="boton-random">▶️ Play</button>
+      <button id="btnPredecir" class="boton-predecir">Apostar</button>
+    </div>
+
+    <!-- Modal de predicción -->
+  <div id="modalPrediccion" class="modal">
+    <div class="modal-contenido">
+      <h2>¿En qué casilla caerá la bolita?</h2>
+      <div class="casillas-botones">
+        <button class="casilla-btn" data-casilla="1">1</button>
+        <button class="casilla-btn" data-casilla="2">2</button>
+        <button class="casilla-btn" data-casilla="3">3</button>
+        <button class="casilla-btn" data-casilla="4">4</button>
+        <button class="casilla-btn" data-casilla="5">5</button>
+        <button class="casilla-btn" data-casilla="6">6</button>
+      </div>
+      <button id="btnConfirmarPrediccion" class="btn-confirmar">Apostar</button>
+    </div>
+  </div>
+
+  <!-- Mostrar resultado -->
+  <!-- Socket.io -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
