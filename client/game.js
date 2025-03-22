@@ -8,7 +8,7 @@ function mostrarMensaje(texto, duracion = 3000) {
     }, duracion);
   }  
 
-const socket = io();
+const socket = io("https://plinko-biur.onrender.com");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
