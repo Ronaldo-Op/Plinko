@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🏇 Carrera de Caballos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="mensajeEmergente"></div>
+
+  <h1>🏇 Carrera de Caballos</h1>
+
+  <div class="info-box">
+    <span id="monedasDisplay">🪙 0</span>
+    <span id="bancoDisplay">💰 0</span>
+  </div>
+
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="btnPredecir">Apostar</button>
+    <button id="btnRandom">Iniciar Carrera</button>
+    <button id="btnHistorial">📜 Historial</button>
+    <button id="verApuestasBtn">👥 Ver Apuestas</button>
+  </div>
+
+  <!-- Modal de predicción -->
+  <div id="modalPrediccion" class="modal">
+    <div class="modal-content">
+      <h2>Elige tu caballo</h2>
+      <div>
+        <button class="casilla-btn" data-casilla="0">🐴 Caballo 1</button>
+        <button class="casilla-btn" data-casilla="1">🐴 Caballo 2</button>
+        <button class="casilla-btn" data-casilla="2">🐴 Caballo 3</button>
+      </div>
+      <p id="prediccionTexto">Sin apuesta.</p>
+      <button id="btnConfirmarPrediccion">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- Modal de apuestas -->
+  <div id="modalApuestas" class="modal">
+    <div class="modal-content">
+      <h3>Apuestas actuales</h3>
+      <ul id="listaApuestas"></ul>
+      <button id="cerrarApuestasBtn">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal de historial -->
+  <div id="modalHistorial" class="modal">
+    <div class="modal-content">
+      <h3>Historial de Carreras</h3>
+      <ul id="listaHistorial"></ul>
+      <button onclick="cerrarHistorial()">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="carrera.js"></script>
+</body>
+</html>

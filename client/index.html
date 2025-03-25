@@ -1,69 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Minijuego de Bolitas - Menú</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎮 Mini Arcade</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Bienvenido al Juego</h1>
+  <main class="menu">
+    <h1>🎮 Mini Arcade</h1>
+    <p>¡Elige un minijuego para comenzar!</p>
 
-<div id="salaContainer">
-  <input type="text" id="nombreJugador" placeholder="Tu nombre">
-  <button id="crearSalaBtn">🎮 Crear sala</button>
-  <div id="infoSala" style="display: none;">
-    <p>🟢 Sala activa disponible</p>
-    <button id="unirseSalaBtn">🔗 Unirse a la sala</button>
-  </div>
-</div>
+    <div class="juegos">
+      <a class="juego" href="/plinko">
+        <h2>🟡 Plinko</h2>
+        <p>Acierta la casilla y gana monedas</p>
+      </a>
 
-<script src="/socket.io/socket.io.js"></script>
-
-
-
-  <script>
-    function mostrarMensaje(texto, duracion = 3000) {
-    const mensaje = document.getElementById("mensajeEmergente");
-    mensaje.textContent = texto;
-    mensaje.classList.add("visible");
-  
-    setTimeout(() => {
-      mensaje.classList.remove("visible");
-    }, duracion);
-  }  
-  const socket = io();
-
-const crearSalaBtn = document.getElementById("crearSalaBtn");
-const unirseSalaBtn = document.getElementById("unirseSalaBtn");
-const infoSala = document.getElementById("infoSala");
-
-// Verificar si hay una sala activa
-socket.emit("verificarSala");
-
-socket.on("salaExiste", (existe) => {
-  if (existe) {
-    crearSalaBtn.style.display = "none";
-    infoSala.style.display = "block";
-  } else {
-    crearSalaBtn.style.display = "inline-block";
-    infoSala.style.display = "none";
-  }
-});
-
-// Crear sala
-crearSalaBtn.addEventListener("click", () => {
-  const nombre = document.getElementById("nombreJugador").value.trim();
-  if (!nombre) return alert("Ingresa tu nombre");
-  window.location.href = `game.html?nombre=${encodeURIComponent(nombre)}&crear=true`;
-});
-
-// Unirse a sala
-unirseSalaBtn.addEventListener("click", () => {
-  const nombre = document.getElementById("nombreJugador").value.trim();
-  if (!nombre) return alert("Ingresa tu nombre");
-  window.location.href = `game.html?nombre=${encodeURIComponent(nombre)}`;
-});
-  </script>
+      <a class="juego" href="/carrera">
+        <h2>🏇 Carrera de Caballos</h2>
+        <p>Apuesta al caballo ganador</p>
+      </a>
+    </div>
+  </main>
 </body>
 </html>
